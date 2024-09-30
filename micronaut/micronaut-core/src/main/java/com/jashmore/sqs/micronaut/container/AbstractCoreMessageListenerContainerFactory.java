@@ -21,7 +21,7 @@ import java.util.function.Supplier;
  * Abstract Factory for building the core {@link MessageListenerContainer}s which handles actions like calculating the identifier,
  * getting the SQS client etc.
  *
- * @param <A> the Spring annotation that is used to define the container's properties
+ * @param <A> the annotation that is used to define the container's properties
  * @param <P> the properties object that configures the {@link MessageListenerContainer}
  */
 public abstract class AbstractCoreMessageListenerContainerFactory<A extends Annotation, P>

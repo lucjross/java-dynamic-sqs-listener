@@ -5,7 +5,7 @@ import com.jashmore.sqs.container.MessageListenerContainer;
 import java.util.Set;
 
 /**
- * Service that can be injected into the Spring Application to start and stop the containers that are controlling
+ * Service that can be injected into the Micronaut Application to start and stop the containers that are controlling
  * the consumption of queue messages.
  */
 public interface MessageListenerContainerCoordinator {
