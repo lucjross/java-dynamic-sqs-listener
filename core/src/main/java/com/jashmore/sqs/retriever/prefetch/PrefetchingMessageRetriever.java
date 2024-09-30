@@ -1,28 +1,26 @@
 package com.jashmore.sqs.retriever.prefetch;
 
-import static com.jashmore.sqs.aws.AwsConstants.MAX_SQS_RECEIVE_WAIT_TIME_IN_SECONDS;
-import static com.jashmore.sqs.retriever.prefetch.PrefetchingMessageRetrieverConstants.DEFAULT_ERROR_BACKOFF_TIMEOUT;
-import static com.jashmore.sqs.util.properties.PropertyUtils.safelyGetPositiveOrZeroDuration;
-
 import com.jashmore.sqs.QueueProperties;
 import com.jashmore.sqs.aws.AwsConstants;
 import com.jashmore.sqs.retriever.MessageRetriever;
 import com.jashmore.sqs.util.Preconditions;
 import com.jashmore.sqs.util.collections.CollectionUtils;
+import lombok.extern.slf4j.Slf4j;
+import software.amazon.awssdk.core.exception.SdkClientException;
+import software.amazon.awssdk.core.exception.SdkInterruptedException;
+import software.amazon.awssdk.services.sqs.SqsAsyncClient;
+import software.amazon.awssdk.services.sqs.model.*;
+
 import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import lombok.extern.slf4j.Slf4j;
-import software.amazon.awssdk.core.exception.SdkClientException;
-import software.amazon.awssdk.core.exception.SdkInterruptedException;
-import software.amazon.awssdk.services.sqs.SqsAsyncClient;
-import software.amazon.awssdk.services.sqs.model.Message;
-import software.amazon.awssdk.services.sqs.model.QueueAttributeName;
-import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest;
-import software.amazon.awssdk.services.sqs.model.ReceiveMessageResponse;
+
+import static com.jashmore.sqs.aws.AwsConstants.MAX_SQS_RECEIVE_WAIT_TIME_IN_SECONDS;
+import static com.jashmore.sqs.retriever.prefetch.PrefetchingMessageRetrieverConstants.DEFAULT_ERROR_BACKOFF_TIMEOUT;
+import static com.jashmore.sqs.util.properties.PropertyUtils.safelyGetPositiveOrZeroDuration;
 
 /**
  * Message retriever that allows for the prefetching of messages for faster throughput by making sure that there are always messages in a queue locally to be
@@ -166,7 +164,7 @@ public class PrefetchingMessageRetriever implements MessageRetriever {
         final ReceiveMessageRequest.Builder requestBuilder = ReceiveMessageRequest
             .builder()
             .queueUrl(queueProperties.getQueueUrl())
-            .attributeNames(QueueAttributeName.ALL)
+            .messageSystemAttributeNames(MessageSystemAttributeName.ALL)
             .messageAttributeNames(QueueAttributeName.ALL.toString())
             .waitTimeSeconds(MAX_SQS_RECEIVE_WAIT_TIME_IN_SECONDS)
             .maxNumberOfMessages(numberOfMessagesToObtain);

@@ -26,10 +26,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import software.amazon.awssdk.services.sqs.SqsAsyncClient;
-import software.amazon.awssdk.services.sqs.model.Message;
-import software.amazon.awssdk.services.sqs.model.QueueAttributeName;
-import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest;
-import software.amazon.awssdk.services.sqs.model.ReceiveMessageResponse;
+import software.amazon.awssdk.services.sqs.model.*;
 
 @Slf4j
 @ExtendWith(MockitoExtension.class)
@@ -483,7 +480,8 @@ class BatchingMessageRetrieverTest {
             ReceiveMessageRequest.class
         );
         verify(sqsAsyncClient).receiveMessage(receiveMessageRequestArgumentCaptor.capture());
-        assertThat(receiveMessageRequestArgumentCaptor.getValue().attributeNames()).containsExactly(QueueAttributeName.ALL);
+        assertThat(receiveMessageRequestArgumentCaptor.getValue().messageSystemAttributeNames())
+                .containsExactly(MessageSystemAttributeName.ALL);
     }
 
     @Test

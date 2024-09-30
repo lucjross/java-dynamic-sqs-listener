@@ -23,6 +23,10 @@ include(
     ":java-dynamic-sqs-listener-api",
     ":java-dynamic-sqs-listener-core",
 
+    // Micronaut
+    ":java-dynamic-sqs-listener-micronaut-api",
+    ":java-dynamic-sqs-listener-micronaut-core",
+
     // Spring
     ":java-dynamic-sqs-listener-spring-api",
     ":java-dynamic-sqs-listener-spring-core",
@@ -62,6 +66,7 @@ include(
     ":example:core-kotlin-example",
     ":example:fifo-example",
     ":example:ktor-example",
+    ":example:micronaut-integration-test-example",
     ":example:spring-cloud-schema-registry:consumer",
     ":example:spring-cloud-schema-registry:producer",
     ":example:spring-cloud-schema-registry:producer-two",
@@ -75,6 +80,10 @@ include(
 // Core
 project(":java-dynamic-sqs-listener-api").projectDir = file("api")
 project(":java-dynamic-sqs-listener-core").projectDir = file("core")
+
+// Micronaut
+project(":java-dynamic-sqs-listener-micronaut-core").projectDir = file("micronaut/micronaut-core")
+project(":java-dynamic-sqs-listener-micronaut-api").projectDir = file("micronaut/micronaut-api")
 
 // Spring
 project(":java-dynamic-sqs-listener-spring-api").projectDir = file("spring/spring-api")
@@ -110,6 +119,7 @@ project(":example:core-example").projectDir = file("examples/core-example")
 project(":example:core-kotlin-example").projectDir = file("examples/core-kotlin-example")
 project(":example:fifo-example").projectDir = file("examples/fifo-example")
 project(":example:ktor-example").projectDir = file("examples/ktor-example")
+project(":example:micronaut-integration-test-example").projectDir = file("examples/micronaut-integration-test-example")
 project(":example:spring-aws-example").projectDir = file("examples/spring-aws-example")
 project(":example:spring-cloud-schema-registry:consumer").projectDir = file("examples/spring-cloud-schema-registry-example/spring-cloud-schema-registry-consumer")
 project(":example:spring-cloud-schema-registry:producer").projectDir = file("examples/spring-cloud-schema-registry-example/spring-cloud-schema-registry-producer")

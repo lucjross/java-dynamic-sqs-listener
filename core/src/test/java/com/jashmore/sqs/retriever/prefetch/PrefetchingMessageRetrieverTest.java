@@ -36,10 +36,7 @@ import org.mockito.stubbing.Answer;
 import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.core.exception.SdkInterruptedException;
 import software.amazon.awssdk.services.sqs.SqsAsyncClient;
-import software.amazon.awssdk.services.sqs.model.Message;
-import software.amazon.awssdk.services.sqs.model.QueueAttributeName;
-import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest;
-import software.amazon.awssdk.services.sqs.model.ReceiveMessageResponse;
+import software.amazon.awssdk.services.sqs.model.*;
 
 @Slf4j
 @ExtendWith(MockitoExtension.class)
@@ -428,7 +425,8 @@ class PrefetchingMessageRetrieverTest {
             ReceiveMessageRequest.class
         );
         verify(sqsAsyncClient).receiveMessage(receiveMessageRequestArgumentCaptor.capture());
-        assertThat(receiveMessageRequestArgumentCaptor.getValue().attributeNames()).contains(QueueAttributeName.ALL);
+        assertThat(receiveMessageRequestArgumentCaptor.getValue().messageSystemAttributeNames())
+                .contains(MessageSystemAttributeName.ALL);
     }
 
     @Test
